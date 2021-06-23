@@ -7,14 +7,13 @@ namespace App\MetadataManagement\MetaItem;
 use Exception;
 use IteratorAggregate;
 use ArrayAccess;
-use JsonSerializable;
 use Countable;
 use ArrayIterator;
 use Traversable;
 
 use function count;
 
-class MetaDataItemCollection implements IteratorAggregate, ArrayAccess, JsonSerializable, Countable
+class MetaItemCollection implements MetaItemInterface, IteratorAggregate, ArrayAccess, Countable
 {
     /**
      * @var array

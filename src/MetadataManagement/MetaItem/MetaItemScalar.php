@@ -4,9 +4,7 @@ declare(strict_types = 1);
 
 namespace App\MetadataManagement\MetaItem;
 
-use JsonSerializable;
-
-class MetaItem implements JsonSerializable
+class MetaItemScalar implements MetaItemInterface
 {
     /**
      * @var mixed

@@ -5,11 +5,10 @@ declare(strict_types = 1);
 namespace App\MetadataManagement\MetaItem;
 
 use App\Utilities\ObjectMap;
-use JsonSerializable;
 
 use function iterator_to_array;
 
-class CompoundMetaItem implements JsonSerializable
+class MetaItemObject implements MetaItemInterface
 {
     protected ObjectMap $items;
 
@@ -18,7 +17,7 @@ class CompoundMetaItem implements JsonSerializable
         $this->items = new ObjectMap($items);
     }
 
-    public function set(string $key, MetaItem $item) : CompoundMetaItem
+    public function set(string $key, MetaItemInterface $item) : MetaItemObject
     {
         $this->items->set($key, $item);
 
@@ -28,9 +27,9 @@ class CompoundMetaItem implements JsonSerializable
     /**
      * @param string $key
      *
-     * @return \App\MetadataManagement\MetaItem\MetaItem|null|object
+     * @return \App\MetadataManagement\MetaItem\MetaItemInterface|null|object
      */
-    public function get(string $key) : ?MetaItem
+    public function get(string $key) : ?MetaItemInterface
     {
         return $this->items->get($key);
     }
@@ -40,7 +39,7 @@ class CompoundMetaItem implements JsonSerializable
         return isset($this->items[$key]);
     }
 
-    public function delete(string $key) : ?MetaItem
+    public function delete(string $key) : ?MetaItemInterface
     {
         if (!$this->has($key)) {
             return null;
