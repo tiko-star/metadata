@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 require_once __DIR__.'/vendor/autoload.php';
 
-use App\MetadataManagement\Metadata\Parser\Compiler;
+use App\MetadataManagement\Compiler;
 use App\MetadataManagement\MetaItem\MetaItemCollection;
 use App\MetadataManagement\MetaItem\MetaItemObject;
 use App\MetadataManagement\MetaItem\MetaItemScalar;
@@ -38,7 +38,6 @@ $metadata = new MetaItemObject([
 ]);
 
 dump(json_encode($metadata, JSON_PRETTY_PRINT));
-
 
 $compiler = new Compiler();
 
@@ -78,6 +77,23 @@ $m = $compiler->compile(
     "propertyObj": {"foo": "bar"}
 }
 METADATA,
+        true
+    )
+);
+
+dump($m);
+
+$m = $compiler->compile(
+    json_decode(
+        <<<JSON
+[
+    {
+        "foo": "bar",
+        "baz": {"qux": "bat"}
+    },
+    123
+]
+JSON,
         true
     )
 );

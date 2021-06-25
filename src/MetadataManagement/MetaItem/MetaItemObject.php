@@ -6,8 +6,6 @@ namespace App\MetadataManagement\MetaItem;
 
 use App\Utilities\ObjectMap;
 
-use function iterator_to_array;
-
 class MetaItemObject implements MetaItemInterface
 {
     protected ObjectMap $items;
@@ -55,12 +53,11 @@ class MetaItemObject implements MetaItemInterface
      * Specify data which should be serialized to JSON
      *
      * @link  https://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4
+     * @return ObjectMap data which can be serialized by <b>json_encode</b>,
+     *                   which is a value of any type other than a resource.
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize() : ObjectMap
     {
-        return iterator_to_array($this->items);
+        return $this->items;
     }
 }
