@@ -5,8 +5,16 @@ declare(strict_types = 1);
 namespace App\MetadataManagement\MetaItem;
 
 use App\Utilities\ObjectMap;
+use Exception;
+use IteratorAggregate;
+use Traversable;
 
-class MetaItemObject implements MetaItemInterface
+/**
+ * Map of MetaItemInterface instances.
+ *
+ * @package App\MetadataManagement\MetaItem
+ */
+class MetaItemObject implements MetaItemInterface, IteratorAggregate
 {
     protected ObjectMap $items;
 
@@ -50,14 +58,15 @@ class MetaItemObject implements MetaItemInterface
     }
 
     /**
-     * Specify data which should be serialized to JSON
+     * Retrieve an external iterator
      *
-     * @link  https://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return ObjectMap data which can be serialized by <b>json_encode</b>,
-     *                   which is a value of any type other than a resource.
+     * @link https://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     * @throws Exception on failure.
      */
-    public function jsonSerialize() : ObjectMap
+    public function getIterator()
     {
-        return $this->items;
+        return $this->items->getIterator();
     }
 }

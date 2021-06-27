@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 require_once __DIR__.'/vendor/autoload.php';
 
-use App\MetadataManagement\Compiler;
+use App\MetadataManagement\Loader\MetadataLoaderFileJson;
 use App\MetadataManagement\MetaItem\MetaItemCollection;
 use App\MetadataManagement\MetaItem\MetaItemObject;
 use App\MetadataManagement\MetaItem\MetaItemScalar;
@@ -33,69 +33,38 @@ $metadata = new MetaItemObject([
     'propertyStr' => new MetaItemScalar('foo'),
     'propertyArr' => new MetaItemCollection([
         new MetaItemScalar('bar'),
+        new MetaItemCollection([
+            new MetaItemScalar('baz'),
+        ]),
     ]),
     'propertyNum' => new MetaItemScalar(12.5),
 ]);
 
-dump(json_encode($metadata, JSON_PRETTY_PRINT));
+$dumper = new \App\MetadataManagement\Dumper\MetadataDumperJson();
+dump($metadata);
+echo($dumper->dump(new \App\MetadataManagement\Metadata($metadata)));
 
-$compiler = new Compiler();
 
-$m = $compiler->compile(
-    json_decode(
-        <<<METADATA
-{
-    "widgets": [
-        {
-            "hash": "e6a1ab4e-a753-4214-85b7-6b83f1d07025",
-            "media": [
-                {
-                    "path": "images/foo.png",
-                    "name": "foo.png"
-                }
-            ]
-        },
-        {
-            "hash": "443ce372-6a3a-4b33-855a-383e64a0c966",
-            "media": [
-                {
-                    "path": "images/bar.png",
-                    "name": "bar.png"
-                }
-            ],
-            "css": {
-                "bg-color": "green",
-                "text-width": "13px"
-            }
-        }
-    ],
-    "propertyStr": "foo",
-    "propertyArr": [
-        "bar"
-    ],
-    "propertyNum": 12.5,
-    "propertyObj": {"foo": "bar"}
-}
-METADATA,
-        true
-    )
-);
 
-dump($m);
+$loader = new MetadataLoaderFileJson();
 
-$m = $compiler->compile(
-    json_decode(
-        <<<JSON
-[
-    {
-        "foo": "bar",
-        "baz": {"qux": "bat"}
-    },
-    123
-]
-JSON,
-        true
-    )
-);
+$m = $loader->load(__DIR__ . '/metadata.json');
+
+////dump($m);
+//
+//$m = $compiler->compile(
+//    json_decode(
+//        <<<JSON
+//[
+//    {
+//        "foo": "bar",
+//        "baz": {"qux": "bat"}
+//    },
+//    123
+//]
+//JSON,
+//        true
+//    )
+//);
 
 dd($m);

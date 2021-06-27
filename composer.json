@@ -21,7 +21,8 @@
         }
     ],
     "require": {
-        "ext-json": "*"
+        "ext-json": "*",
+        "doctrine/collections": "^1.6"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.3",

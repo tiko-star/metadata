@@ -2,33 +2,68 @@
 
 declare(strict_types = 1);
 
-namespace App\MetadataManagement;
+namespace App\MetadataManagement\Loader;
 
+use App\MetadataManagement\Loader\Exception\InvalidMetadataContentException;
+use App\MetadataManagement\Loader\Exception\MetadataFileNotFoundException;
+use App\MetadataManagement\Metadata;
 use App\MetadataManagement\MetaItem\MetaItemCollection;
 use App\MetadataManagement\MetaItem\MetaItemInterface;
 use App\MetadataManagement\MetaItem\MetaItemObject;
 use App\MetadataManagement\MetaItem\MetaItemScalar;
+use JsonException;
 use stdClass;
 
 use function App\Utilities\is_assoc;
 
 /**
- * Compiles metadata information and generates appropriate instances of MetaItemInterface.
+ * MetadataLoaderFileJson loads JSON files metadata definitions.
  *
- * @package App\MetadataManagement
+ * @package App\MetadataManagement\Loader
  */
-class Compiler
+class MetadataLoaderFileJson implements MetadataLoaderInterface
 {
     /**
-     * Compile metadata into object representation.
+     * Load metadata file and convert into Metadata instance.
      *
-     * @param array $metadata
+     * @param string $path
      *
-     * @return \App\MetadataManagement\MetaItem\MetaItemInterface
+     * @return \App\MetadataManagement\Metadata
      */
-    public function compile(array $metadata) : MetaItemInterface
+    public function load(string $path) : Metadata
     {
-        return $this->hydrate($metadata);
+        $content = $this->loadFile($path);
+        $root = $this->hydrate($content);
+
+        return new Metadata($root);
+    }
+
+    /**
+     * Load JSON file and convert it into an array.
+     *
+     * @param string $path
+     *
+     * @return array
+     */
+    protected function loadFile(string $path) : array
+    {
+        if (!is_readable($path)) {
+            throw new MetadataFileNotFoundException('Metadata file not found.');
+        }
+
+        $content = file_get_contents($path);
+
+        try {
+            $data = json_decode($content, true, JSON_THROW_ON_ERROR);
+
+            if (!is_array($data)) {
+                throw new InvalidMetadataContentException('Metadata content must be an array.');
+            }
+
+            return $data;
+        } catch (JsonException $ex) {
+            throw new InvalidMetadataContentException('Invalid metadata content.', $ex->getCode(), $ex);
+        }
     }
 
     /**
@@ -36,7 +71,7 @@ class Compiler
      *
      * @param $data
      *
-     * @return \App\MetadataManagement\MetaItem\MetaItemInterface
+     * @return \App\MetadataManagement\MetaItem\MetaItemInterface|MetaItemObject
      */
     protected function hydrate($data) : MetaItemInterface
     {

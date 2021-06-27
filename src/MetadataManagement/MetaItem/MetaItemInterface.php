@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace App\MetadataManagement\MetaItem;
 
-use JsonSerializable;
-
-interface MetaItemInterface extends JsonSerializable
+/**
+ * Interface for all kind of MetaItem instances.
+ *
+ * @package App\MetadataManagement\MetaItem
+ */
+interface MetaItemInterface
 {
-
 }

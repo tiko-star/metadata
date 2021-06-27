@@ -1,0 +1,34 @@
+{
+  "widgets": [
+    {
+      "hash": "e6a1ab4e-a753-4214-85b7-6b83f1d07025",
+      "media": [
+        {
+          "path": "images/foo.png",
+          "name": "foo.png"
+        }
+      ]
+    },
+    {
+      "hash": "443ce372-6a3a-4b33-855a-383e64a0c966",
+      "media": [
+        {
+          "path": "images/bar.png",
+          "name": "bar.png"
+        }
+      ],
+      "css": {
+        "bg-color": "green",
+        "text-width": "13px"
+      }
+    }
+  ],
+  "propertyStr": "foo",
+  "propertyArr": [
+    "bar"
+  ],
+  "propertyNum": 12.5,
+  "propertyObj": {
+    "foo": "bar"
+  }
+}
