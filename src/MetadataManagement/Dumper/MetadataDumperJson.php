@@ -10,6 +10,9 @@ use App\MetadataManagement\MetaItem\MetaItemInterface;
 use App\MetadataManagement\MetaItem\MetaItemObject;
 use App\MetadataManagement\MetaItem\MetaItemScalar;
 
+use function json_encode;
+use const JSON_PRETTY_PRINT;
+
 /**
  * MetadataDumperJson dumps a metadata object as a JSON string.
  *

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Utilities;
+namespace App\Tests\Utilities;
 
 use PHPUnit\Framework\TestCase;
 use function App\Utilities\is_assoc;
