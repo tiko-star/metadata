@@ -14,6 +14,10 @@ use App\MetadataManagement\MetaItem\MetaItemScalar;
 use JsonException;
 use stdClass;
 
+use function is_readable;
+use function file_get_contents;
+use function json_decode;
+use function is_array;
 use function App\Utilities\is_assoc;
 
 /**
