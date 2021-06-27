@@ -12,7 +12,7 @@ use App\MetadataManagement\MetaItem\MetaItemObject;
  *
  * @package App\MetadataManagement
  */
-final class Metadata implements MetaItemInterface
+final class Metadata
 {
     /**
      * @var \App\MetadataManagement\MetaItem\MetaItemObject Root object to store meta item entries.
