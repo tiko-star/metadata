@@ -128,7 +128,7 @@ class ObjectMap implements Countable, IteratorAggregate, JsonSerializable
      * Retrieve an external iterator
      *
      * @link https://php.net/manual/en/iteratoraggregate.getiterator.php
-     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or <b>Traversable</b>
      *
      * @throws Exception on failure.
      */
